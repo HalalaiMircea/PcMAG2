@@ -1,18 +1,26 @@
 ﻿using System.Collections.Generic;
 using PcMAG2.Models;
+using PcMAG2.Repositories;
 
 namespace PcMAG2.Services
 {
     public class ProductService : IProductService
     {
+        private readonly IProductRepository _productRepository;
+
+        public ProductService(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
+
         public List<Product> GetAllProducts()
         {
-            throw new System.NotImplementedException();
+            return _productRepository.GetAll();
         }
 
         public Product GetProductById(int productId)
         {
-            throw new System.NotImplementedException();
+            return _productRepository.FindById(productId);
         }
     }
 }
