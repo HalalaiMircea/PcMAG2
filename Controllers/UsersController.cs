@@ -16,11 +16,20 @@ namespace PcMAG2.Controllers
             _userService = userService;
         }
 
+        [HttpPost("register")]
+        public IActionResult Register(RegisterRequest model)
+        {
+            var response = _userService.Register(model);
+            if (response == null)
+                return Conflict(new {message = "Account with this email already exists!"});
+
+            return Ok(response);
+        }
+
         [HttpPost("login")]
         public IActionResult Login(AuthRequest model)
         {
             var response = _userService.Login(model);
-
             if (response == null)
                 return BadRequest(new {message = "Username or password is incorrect"});
 

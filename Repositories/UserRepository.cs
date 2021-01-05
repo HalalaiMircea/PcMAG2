@@ -14,5 +14,10 @@ namespace PcMAG2.Repositories
         {
             return _table.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
+
+        public User? FindByEmail(string email)
+        {
+            return _table.FirstOrDefault(u => u.Email == email);
+        }
     }
 }

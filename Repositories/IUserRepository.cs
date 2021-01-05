@@ -5,6 +5,8 @@ namespace PcMAG2.Repositories
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        public User? GetByEmailAndPassword(string email, string password);
+        User? GetByEmailAndPassword(string email, string password);
+
+        User? FindByEmail(string email);
     }
 }

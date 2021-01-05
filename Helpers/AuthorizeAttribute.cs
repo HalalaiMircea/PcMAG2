@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using PcMAG2.Models;
 using PcMAG2.Models.Entities;
 
 namespace PcMAG2.Helpers

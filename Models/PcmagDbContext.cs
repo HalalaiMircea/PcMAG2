@@ -117,10 +117,10 @@ namespace PcMAG2.Models
             {
                 entity.ToTable("USER");
 
-                entity.Property(e => e.UserId)
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
-                    .HasColumnName("user_id");
+                entity.HasIndex(e => e.Email, "IX_USER_email")
+                    .IsUnique();
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.Property(e => e.Address)
                     .HasColumnType("varchar(255)")
@@ -132,10 +132,12 @@ namespace PcMAG2.Models
                     .HasColumnName("email");
 
                 entity.Property(e => e.FirstName)
+                    .IsRequired()
                     .HasColumnType("varchar(100)")
                     .HasColumnName("first_name");
 
                 entity.Property(e => e.LastName)
+                    .IsRequired()
                     .HasColumnType("varchar(100)")
                     .HasColumnName("last_name");
 

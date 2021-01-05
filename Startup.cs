@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PcMAG2.Helpers;
 using PcMAG2.Models;
+using PcMAG2.Models.Mappings;
 using PcMAG2.Repositories;
 using PcMAG2.Services;
 
@@ -36,6 +38,8 @@ namespace PcMAG2
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
 
+            services.AddAutoMapper(typeof(UserMappingProfile));
+
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
@@ -59,6 +63,9 @@ namespace PcMAG2
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
@@ -73,9 +80,6 @@ namespace PcMAG2
 
                 if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
-            
-            // custom jwt auth middleware
-            app.UseMiddleware<JwtMiddleware>();
         }
     }
 }
