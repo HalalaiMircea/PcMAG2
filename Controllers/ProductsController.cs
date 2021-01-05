@@ -5,11 +5,11 @@ namespace PcMAG2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class ProductsController : ControllerBase
     {
-        private readonly IProductService _service;
+        private readonly ProductService _service;
 
-        public ProductController(IProductService service)
+        public ProductsController(ProductService service)
         {
             _service = service;
         }

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
-namespace PcMAG2.Models
+namespace PcMAG2.Models.Entities
 {
     public partial class ProductCategory
     {

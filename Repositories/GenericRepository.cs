@@ -18,7 +18,7 @@ namespace PcMAG2.Repositories
 
         public void Create(T entity)
         {
-            _context.Set<T>().Add(entity);
+            _table.Add(entity);
         }
 
         public void CreateRange(IEnumerable<T> entities)
@@ -31,7 +31,7 @@ namespace PcMAG2.Repositories
             _table.Remove(entity);
         }
 
-        public T FindById(int id)
+        public T? FindById(int id)
         {
             return _table.Find((long)id);
         }

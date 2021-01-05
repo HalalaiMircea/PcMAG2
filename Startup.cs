@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PcMAG2.Helpers;
 using PcMAG2.Models;
 using PcMAG2.Repositories;
 using PcMAG2.Services;
@@ -25,13 +26,15 @@ namespace PcMAG2
         {
             services.AddDbContext<PcmagDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddControllersWithViews();
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IProductService, ProductService>();
-
-            services.AddTransient<ProductRepository>();
+            services.AddControllers();
             
+            // configure strongly typed settings object
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+            
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ProductService>();
+            services.AddScoped<UserService>();
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
@@ -70,6 +73,9 @@ namespace PcMAG2
 
                 if (env.IsDevelopment()) spa.UseReactDevelopmentServer("start");
             });
+            
+            // custom jwt auth middleware
+            app.UseMiddleware<JwtMiddleware>();
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 #nullable disable
 
-namespace PcMAG2.Models
+namespace PcMAG2.Models.Entities
 {
-    public partial class User
+    public class User
     {
         public User()
         {
@@ -14,7 +14,7 @@ namespace PcMAG2.Models
 
         public long UserId { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
+        [JsonIgnore] public string Password { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Phone { get; set; }
