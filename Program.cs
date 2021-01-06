@@ -13,6 +13,7 @@ namespace PcMAG2
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("Heloo World");
             CreateHostBuilder(args).Build().Run();
         }
 

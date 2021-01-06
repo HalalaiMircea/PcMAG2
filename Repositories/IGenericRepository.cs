@@ -10,9 +10,9 @@ namespace PcMAG2.Repositories
 
         void HardDelete(T entity);
 
-        T? FindById(int id);
+        T? FindById(long id);
 
-        List<T> GetAll();
+        List<T> FindAll();
 
         bool SaveChanges();
 

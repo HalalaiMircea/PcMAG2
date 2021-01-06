@@ -31,12 +31,12 @@ namespace PcMAG2.Repositories
             _table.Remove(entity);
         }
 
-        public T? FindById(int id)
+        public T? FindById(long id)
         {
-            return _table.Find((long)id);
+            return _table.Find(id);
         }
 
-        public List<T> GetAll()
+        public List<T> FindAll()
         {
             return _table.ToList();
         }

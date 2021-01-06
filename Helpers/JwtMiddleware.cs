@@ -36,7 +36,7 @@ namespace PcMAG2.Helpers
             try
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_appSettings.Secret ?? throw new InvalidOperationException());
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
                 tokenHandler.ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -48,13 +48,15 @@ namespace PcMAG2.Helpers
                 }, out SecurityToken validatedToken);
 
                 var jwtToken = (JwtSecurityToken) validatedToken;
-                var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+                var userId = long.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
 
                 // attach user to context on successful jwt validation
                 context.Items["User"] = userService.GetById(userId);
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine("JWT MIDDLEWARE Catch");
+                Console.WriteLine(e);
                 // do nothing if jwt validation fails
                 // user is not attached to context so request won't have access to secure routes
             }

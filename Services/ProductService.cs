@@ -16,7 +16,7 @@ namespace PcMAG2.Services
 
         public List<Product> GetAllProducts()
         {
-            return _productRepository.GetAll();
+            return _productRepository.FindAll();
         }
 
         public Product? GetProductById(int productId)

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -28,10 +27,10 @@ namespace PcMAG2.Services
 
         public List<User> GetAll()
         {
-            return _userRepository.GetAll();
+            return _userRepository.FindAll();
         }
 
-        public User? GetById(int id)
+        public User? GetById(long id)
         {
             return _userRepository.FindById(id);
         }
@@ -55,13 +54,13 @@ namespace PcMAG2.Services
         public AuthResponse? Login(AuthRequest request)
         {
             // find user
-            var user = _userRepository.GetByEmailAndPassword(request.Email, request.Password);
+            var user = _userRepository.FindByEmailAndPassword(request.Email, request.Password);
             if (user == null) return null;
 
             // attach token to DTO
             var authResponse = _mapper.Map<User, AuthResponse>(user);
             authResponse.Token = GenerateJwtForUser(user);
-            
+
             return authResponse;
         }
 

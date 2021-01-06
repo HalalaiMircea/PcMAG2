@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using PcMAG2.Helpers;
 using PcMAG2.Models;
 using PcMAG2.Models.Mappings;
@@ -28,17 +29,24 @@ namespace PcMAG2
         {
             services.AddDbContext<PcmagDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
-            
             // configure strongly typed settings object
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            
+            // Very important so we dont have reference loops serialized in Json. Silly Microsoft :P
+            services.AddControllers() .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            });
+
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
+            services.AddScoped<CartService>();
 
             services.AddAutoMapper(typeof(UserMappingProfile));
+            services.AddAutoMapper(typeof(CartMappingProfile));
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
@@ -63,10 +71,8 @@ namespace PcMAG2
             app.UseSpaStaticFiles();
 
             app.UseRouting();
-            
             // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

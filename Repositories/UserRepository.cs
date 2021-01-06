@@ -10,7 +10,7 @@ namespace PcMAG2.Repositories
         {
         }
 
-        public User? GetByEmailAndPassword(string email, string password)
+        public User? FindByEmailAndPassword(string email, string password)
         {
             return _table.FirstOrDefault(u => u.Email == email && u.Password == password);
         }

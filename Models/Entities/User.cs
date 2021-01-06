@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace PcMAG2.Models.Entities
 {
@@ -17,7 +17,6 @@ namespace PcMAG2.Models.Entities
         public string LastName { get; set; }
         public string? Phone { get; set; }
         public string? Address { get; set; }
-
         public virtual ICollection<CartItem> CartItems { get; set; }
     }
 }
