@@ -20,23 +20,20 @@ namespace PcMAG2.Services
         public bool CreateOrUpdateCartItemForUser(User user, CartItemDTO cartItemDto)
         {
             var cartItem = _cartItemRepository.FindById(user.UserId, cartItemDto.ProductId);
-            // If item is already in user's cart
-            if (cartItem != null)
-            {
-                if (cartItemDto.Quantity <= 0)
-                {
-                    _cartItemRepository.HardDelete(cartItem);
-                }
-                else // Update the quantity if != 0
-                {
-                    cartItem.Quantity = cartItemDto.Quantity;
-                    _cartItemRepository.Update(cartItem);
-                }
-            }
-            else // Else create new item
+            if (cartItem == null) // If item is already in user's cart
             {
                 cartItem = _mapper.Map<CartItemDTO, CartItem>(cartItemDto);
+                cartItem.UserId = user.UserId;
                 _cartItemRepository.Create(cartItem);
+            }
+            else if (cartItemDto.Quantity <= 0)
+            {
+                _cartItemRepository.HardDelete(cartItem);
+            }
+            else // Update the quantity if > 0
+            {
+                cartItem.Quantity = cartItemDto.Quantity;
+                _cartItemRepository.Update(cartItem);
             }
 
             return _cartItemRepository.SaveChanges();

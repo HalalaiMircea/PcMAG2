@@ -14,7 +14,7 @@ namespace PcMAG2.Controllers
             _service = service;
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             var response = _service.GetAllProducts();
