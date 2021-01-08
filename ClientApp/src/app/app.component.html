@@ -1,6 +1,16 @@
-<body>
-  <app-nav-menu></app-nav-menu>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
-</body>
+<mat-grid-list cols="4" gutterSize="24px">
+  <mat-grid-tile *ngFor="let product of products">
+    <mat-card class="product-card">
+      <img mat-card-image [src]="product.imageUrl" alt="Product photo">
+      <mat-card-title>{{product.productName}}</mat-card-title>
+      <mat-card-content>
+        <span style="color:red">{{product.price}} RON</span>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>ADD TO CART</button>
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+<router-outlet></router-outlet>

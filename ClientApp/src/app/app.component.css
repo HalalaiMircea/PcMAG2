@@ -1,0 +1,40 @@
+/*mat-grid-list{
+  margin-left: 128px;
+  margin-right: 128px;
+}*/
+
+.product-card {
+  width: 250px;
+  height: 400px;
+}
+
+.product-card img {
+  min-width: 250px;
+  height: 250px;
+  object-fit: scale-down;
+  object-position: center;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  mat-grid-list {
+    margin-left: 64px;
+    margin-right: 64px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
