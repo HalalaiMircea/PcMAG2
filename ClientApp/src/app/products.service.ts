@@ -4,15 +4,17 @@ import { Product } from './models/Product';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ProductsService {
-  private productsUrl = window.origin + '/api/products';
+    private readonly productsUrl = window.origin + '/api/products';
 
-  constructor(private client: HttpClient) {
-  }
+    constructor(
+        private readonly client: HttpClient
+    ) {
+    }
 
-  public getProducts(): Observable<Product[]> {
-    return this.client.get<Product[]>(this.productsUrl);
-  }
+    public getProducts(): Observable<Product[]> {
+        return this.client.get<Product[]>(this.productsUrl);
+    }
 }
