@@ -5,7 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatCardModule} from '@angular/material/card';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [],
@@ -18,7 +18,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatSelectModule,
     MatToolbarModule,
     MatCardModule,
-    MatGridListModule
+    MatIconModule
   ]
 })
 export class AppMaterialModule {

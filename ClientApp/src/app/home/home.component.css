@@ -1,0 +1,66 @@
+
+.card-grid {
+  --card-width: 250px;
+  --grid-gap: 20px;
+  --grid-track-width: calc(var(--card-width) + var(--grid-gap) + 10px);
+
+  margin: 32px 0 32px 0;
+  justify-content: center;
+  display: grid;
+  grid-gap: var(--grid-gap);
+  grid-template-columns: repeat(4, var(--grid-track-width));
+}
+
+.product-card {
+  width: var(--card-width);
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-card-content {
+  flex-grow: 1;
+  overflow: auto;
+}
+
+.product-card img {
+  min-width: 250px;
+  height: 250px;
+  object-fit: scale-down;
+  object-position: center;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(1, var(--grid-track-width));
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .card-grid {
+    grid-template-columns: repeat(1, var(--grid-track-width));
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(2, var(--grid-track-width));
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .card-grid {
+    grid-template-columns: repeat(3, var(--grid-track-width));
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .card-grid {
+    grid-template-columns: repeat(4, var(--grid-track-width));
+  }
+}
