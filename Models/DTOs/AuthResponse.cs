@@ -1,4 +1,6 @@
-﻿namespace PcMAG2.Models.DTOs
+﻿#nullable disable
+
+namespace PcMAG2.Models.DTOs
 {
     public class AuthResponse
     {

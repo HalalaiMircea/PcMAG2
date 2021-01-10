@@ -1,19 +1,19 @@
 <div class="login-wrapper" fxLayoutAlign="center center">
-  <mat-card class="box" fxFlex.gt-xs="500px">
+  <mat-card class="box" fxFlex.gt-xs="500px" fxLayout="column">
     <mat-card-header>
       <mat-card-title>Log in</mat-card-title>
     </mat-card-header>
 
-    <form fxFlexFill fxLayout="column">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column">
       <mat-form-field appearance="fill">
         <mat-label>Enter your email</mat-label>
-        <input matInput placeholder="pat@example.com" required type="email">
-        <!--        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>-->
+        <input matInput formControlName="email" type="email">
+        <mat-error [hidden]="!fc.email.valid">Please enter a valid email</mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
-        <input [type]="hide ? 'password' : 'text'" matInput>
+        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'">
         <button
           (click)="hide = !hide"
           [attr.aria-label]="'Hide password'"
@@ -22,14 +22,13 @@
           matSuffix>
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-error [hidden]="!fc.password.valid">Password is required</mat-error>
       </mat-form-field>
 
-      <mat-card-actions
-        fxLayout="column"
-        fxLayoutGap="16px">
-        <button color="primary" mat-raised-button>Log in</button>
-        <button color="primary" mat-stroked-button>Don't have account? Register</button>
+      <mat-card-actions fxLayout="column" fxLayoutGap="16px">
+        <button type="submit" [disabled]="!loginForm.valid" color="primary" mat-raised-button>Log in</button>
       </mat-card-actions>
     </form>
+    <a routerLink="../register" color="primary" mat-stroked-button>Don't have an account? Sign up</a>
   </mat-card>
 </div>
