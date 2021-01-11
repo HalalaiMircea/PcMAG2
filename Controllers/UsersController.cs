@@ -31,12 +31,12 @@ namespace PcMAG2.Controllers
         {
             var response = _userService.Login(model);
             if (response == null)
-                return BadRequest(new {message = "Username or password is incorrect"});
+                return Unauthorized(new {message = "Email or password are incorrect"});
 
             return Ok(response);
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         [Authorize]
         public IActionResult GetAll()
         {

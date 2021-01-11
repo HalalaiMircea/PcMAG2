@@ -3,10 +3,10 @@
     <img mat-card-image [src]="product.imageUrl" alt="Product photo">
     <mat-card-title>{{product.productName}}</mat-card-title>
     <mat-card-content>
-      <span style="color:red">{{product.price}} RON</span>
+      <span class="price-tag">{{product.price}} RON</span>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary">ADD TO CART</button>
+      <button mat-flat-button color="primary" (click)="onAddToCartClick(product)">Add to Cart</button>
     </mat-card-actions>
   </mat-card>
 </div>

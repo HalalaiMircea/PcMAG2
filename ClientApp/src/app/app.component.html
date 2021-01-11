@@ -1,3 +1,20 @@
-<mat-toolbar color="primary">PcMAG</mat-toolbar>
+<mat-toolbar color="primary" class="mat-elevation-z4">
+  <a mat-button color="basic" routerLink="/">
+    <img id="logo" src="assets/logo.png" alt="Logo-Home">
+  </a>
+  <a mat-button routerLink="/">Contact</a>
+  <a mat-button routerLink="/">About us</a>
+  <div fxFlex="1 1 auto"></div>
+  <a mat-button routerLink="/">
+    <mat-icon>account_circle</mat-icon>
+    Your Account
+  </a>
+  <a mat-button routerLink="/cart">
+    <mat-icon>shopping_cart</mat-icon>
+    Your Cart
+  </a>
+</mat-toolbar>
+
+<div id="nav-spacer"></div>
 
 <router-outlet></router-outlet>

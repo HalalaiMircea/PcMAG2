@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
-using PcMAG2.Models.DTOs;
 using PcMAG2.Models.Entities;
 using PcMAG2.Repositories;
 
@@ -10,33 +10,63 @@ namespace PcMAG2.Services
     {
         private readonly ICartItemRepository _cartItemRepository;
         private readonly IMapper _mapper;
+        private readonly IProductRepository _productRepository;
 
-        public CartService(ICartItemRepository cartItemRepository, IMapper mapper)
+        public CartService(ICartItemRepository cartItemRepository, IMapper mapper, IProductRepository productRepository)
         {
             _cartItemRepository = cartItemRepository;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 
-        public bool CreateOrUpdateCartItemForUser(User user, CartItemDTO cartItemDto)
+        public List<CartItem> AddCartItemForUser(User user, long productId)
         {
-            var cartItem = _cartItemRepository.FindById(user.UserId, cartItemDto.ProductId);
-            if (cartItem == null) // If item is already in user's cart
+            if (_productRepository.FindById(productId) == null) throw new KeyNotFoundException();
+
+            var cartItem = _cartItemRepository.FindById(user.UserId, productId);
+            if (cartItem == null)
             {
-                cartItem = _mapper.Map<CartItemDTO, CartItem>(cartItemDto);
-                cartItem.UserId = user.UserId;
-                _cartItemRepository.Create(cartItem);
+                _cartItemRepository.Create(new CartItem
+                {
+                    UserId = user.UserId,
+                    ProductId = productId,
+                    Quantity = 1
+                });
             }
-            else if (cartItemDto.Quantity <= 0)
+            else // If it already exists, we increment quantity
             {
-                _cartItemRepository.HardDelete(cartItem);
-            }
-            else // Update the quantity if > 0
-            {
-                cartItem.Quantity = cartItemDto.Quantity;
+                cartItem.Quantity++;
                 _cartItemRepository.Update(cartItem);
             }
 
-            return _cartItemRepository.SaveChanges();
+            _cartItemRepository.SaveChanges();
+            return GetAllItemsForUser(user);
+        }
+
+        public List<CartItem> UpdateCartItemQty(User user, long productId, long qty)
+        {
+            var cartItem = _cartItemRepository.FindById(user.UserId, productId);
+            if (cartItem == null)
+                throw new KeyNotFoundException("Product not found in user's cart");
+
+            if (qty <= 0) throw new ArgumentException("Quantity must be higher than 0");
+
+            cartItem.Quantity = qty;
+            _cartItemRepository.Update(cartItem);
+            _cartItemRepository.SaveChanges();
+
+            return GetAllItemsForUser(user);
+        }
+
+        public List<CartItem> RemoveCartItemForUser(User user, long productId)
+        {
+            var cartItem = _cartItemRepository.FindById(user.UserId, productId);
+            if (cartItem == null)
+                throw new KeyNotFoundException("Product not found in user's cart");
+            _cartItemRepository.HardDelete(cartItem);
+            _cartItemRepository.SaveChanges();
+
+            return GetAllItemsForUser(user);
         }
 
         public List<CartItem> GetAllItemsForUser(User user)

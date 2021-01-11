@@ -1,0 +1,24 @@
+.cart-wrapper {
+  margin-top: 32px;
+}
+
+.item-card > img {
+  width: 200px;
+  height: 200px;
+  object-fit: scale-down;
+  object-position: center;
+}
+
+mat-card-title.mat-card-title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+div > span {
+  font-weight: bold;
+}
+
+::ng-deep mat-form-field > div > div.mat-form-field-flex.ng-tns-c97-0 {
+  padding: 0 0 0 0;
+}

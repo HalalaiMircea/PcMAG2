@@ -1,0 +1,14 @@
+#logo {
+  height: 48px;
+}
+
+mat-toolbar {
+  position: fixed;
+  z-index: 10;
+  overflow: hidden;
+  top: 0
+}
+
+#nav-spacer {
+  height: 64px;
+}

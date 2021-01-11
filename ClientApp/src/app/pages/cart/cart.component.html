@@ -1,0 +1,36 @@
+<div class="cart-wrapper" fxLayout="row" fxLayoutAlign="center center">
+
+  <div
+    class="cards-container"
+    fxFlex.xs="100%"
+    fxFlex.sm="600px"
+    fxFlex="845px"
+    fxLayout="column"
+    fxLayoutGap="16px">
+
+    <h1>My Cart</h1>
+
+    <mat-card
+      class="item-card"
+      fxLayout="row"
+      fxLayoutGap="8px"
+      *ngFor="let item of cartItems">
+
+      <img [src]="item.product.imageUrl" fxFlex alt="Product photo">
+
+      <mat-card-title fxFlex="40">{{item.product.productName}}</mat-card-title>
+
+      <mat-form-field id="qty-field" appearance="standard" fxFlex="80px">
+        <mat-label>Quantity</mat-label>
+        <mat-select [ngModel]="item.quantity">
+          <mat-option *ngFor="let number of [1,2,3,4,5]" [value]="number">{{number}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div fxLayout="column" fxFlex fxLayoutGap="8px" fxLayoutAlign="start end">
+        <span>{{item.product.price}} RON</span>
+        <button mat-button color="warn" (click)="onRemoveClick(item)" >Remove</button>
+      </div>
+    </mat-card>
+  </div>
+</div>

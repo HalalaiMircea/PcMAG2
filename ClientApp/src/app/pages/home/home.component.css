@@ -16,6 +16,7 @@
   height: 400px;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 mat-card-content {
@@ -28,6 +29,12 @@ mat-card-content {
   height: 250px;
   object-fit: scale-down;
   object-position: center;
+}
+
+.price-tag {
+  font-size: 20px;
+  font-weight: bold;
+  color: red;
 }
 
 /* Extra small devices (phones, 600px and down) */
