@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
     selector: 'app-login',
@@ -18,14 +19,14 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authService: AuthenticationService
+        private authService: AuthenticationService,
+        private snackBar: MatSnackBar
     ) {
         // redirect to home if already logged in
         if (this.authService.currentUserValue) {
             this.router.navigate(['/']);
         }
         this.loginForm = this.formBuilder.group({
-            // TODO: Do proper email validation
             email: new FormControl('', [Validators.required, Validators.email]),
             password: new FormControl('', Validators.required)
         });
@@ -48,14 +49,13 @@ export class LoginComponent implements OnInit {
 
         // stop here if form is invalid
         if (this.loginForm.invalid) {
-            alert('Invalid login form');
             return;
         }
         this.authService
             .login(this.fc.email.value, this.fc.password.value)
             .subscribe(
                 () => this.router.navigate([this.returnUrl]),
-                error => alert(error.error.message)
+                error => this.snackBar.open(error, undefined, { duration: 3500 })
             );
     }
 }
